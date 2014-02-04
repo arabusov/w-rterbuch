@@ -19,6 +19,7 @@ Word::Word (std::string line)
   std::string first_word, second_word;
   while ((i<line.length())&&(!this->space(line[i]))) i++;
   first_lang = line.substr (0,i+1);
+  std::cout << first_lang << std::endl;
   while ((i<line.length())&&(this->space(line[i]))) i++;
   int start_pos = i;
   while ((i<line.length())&&(!this->space(line[i]))) i++;
