@@ -53,7 +53,7 @@ unsigned int Dict::GetDictSize (void)
 
 Word *Dict::GetWord (unsigned int pos)
 {
-  return words[i];
+  return words[pos];
 }
 
 void Dict::AddWord (Word *fWord)

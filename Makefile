@@ -1,7 +1,7 @@
 root_include_dir    := include
 root_source_dir    := src
 source_subdirs    := . 
-compile_flags      := -Wall -Wextra -pipe
+compile_flags      := -Wall -Wextra -pipe -std=c++11
 link_flags            := -s -pipe
 libraries               := 
          

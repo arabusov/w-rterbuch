@@ -6,13 +6,13 @@
 #include "word.hpp"
 #define __DEBUG__ 1
 
-inline void run_test (char * str)
+inline int run_test (char * str)
 {
   Dict *dict = new Dict (str);
   unsigned int dict_size = dict->GetDictSize ();
   if (!dict_size)
   {
-    std::cerr << "Empty dictionary in " << str <<" file! Aborted." << str::endl;
+    std::cerr << "Empty dictionary in " << str <<" file! Aborted." << std::endl;
     return -4;
   }
   /*
@@ -26,13 +26,14 @@ inline void run_test (char * str)
   std::uniform_int_distribution<unsigned int> int_distribution (0,dict_size-1);
   double real_rand;
   unsigned int int_rand;
+  double probability;
   do
   {
     real_rand = real_distribution (generator);
     int_rand = int_distribution (generator);
-    if (dict->GetWord(int_rand)->GetNumTests != 0)
-      double probability = (double)dict->GetWord(int_rand)->GetNumPassedTests/
-                            (double)dict->GetWord(int_rand)->GetNumTests;
+    if (dict->GetWord(int_rand)->GetNumTests ()!= 0)
+      probability = (double)dict->GetWord(int_rand)->GetNumPassedTests()/
+                            (double)dict->GetWord(int_rand)->GetNumTests();
     else
       probability = 0;
   } while (real_rand < probability);
@@ -43,13 +44,15 @@ inline void run_test (char * str)
   Word *test_word;
   if (choose_lang)
   {
-    std::string base_str = dict->GetWord(int_rand)->GetFirstLang () <<": ";
+    std::string base_str = dict->GetWord(int_rand)->GetFirstLang ();
+    std::cout << base_str << ": ";
     std::cin >> test_str;
     test_word = new Word (base_str, test_str, 0,0);
   }
   else
   {
-    std::string base_str = dict->GetWord(int_rand)->GetSecondLang () <<": ";
+    std::string base_str = dict->GetWord(int_rand)->GetSecondLang ();
+    std::cout << base_str << ": ";
     std::cin >> test_str;
     test_word = new Word (test_str, base_str, 0,0);
   }
@@ -63,6 +66,7 @@ inline void run_test (char * str)
     std::cout << "Failed." << std::endl;
     dict->GetWord (int_rand)->Failed ();
   }
+  return 0;
 } 
   
 
@@ -84,7 +88,7 @@ Current actions:\n\
       ss << argv[1];
       if (!ss.str().compare("-t") || !ss.str().compare ("--test"))
         //run test here.
-        run_test (argv[2]);
+        return run_test (argv[2]);
       else
         if (!ss.str().compare("--add") || !ss.str().compare ("-a"))
         {
