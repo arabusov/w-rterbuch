@@ -9,12 +9,14 @@ class Dict
 {
   private:
     std::vector<Word*> words;
-    std::fstream file;
+    std::string file_string;
   public:
     Dict ();
     Dict (std::string filename);
     ~Dict ();
     bool CheckInDict (Word *fWord);
     void AddWord (Word *fWord);
+    Word *GetWord (unsigned int pos);
+    unsigned int GetDictSize (void);
 };
 #endif

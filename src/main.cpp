@@ -1,9 +1,28 @@
 #include <iostream>
 #include <string>
 #include <sstream>
-//#include "dict.hpp"
+#include <random>
+#include "dict.hpp"
 #include "word.hpp"
 #define __DEBUG__ 1
+
+inline void run_test (char * str)
+{
+  Dict *dict = new Dict (str);
+  unsigned int dict_size = dict->GetDictSize ();
+  if (!dict_size)
+  {
+    std::cerr << "Empty dictionary in " << str <<" file! Aborted." << str::endl;
+    return -4;
+  }
+  /* Now we should create consequence of random words for the test 
+   * it should be wise. Simple words should be skipped oftener than hard words.
+   * Simple alhorithm: probability of the word's skiping is equal ratio num_passed_tests
+   * to num_tests. So, now we shall release usual Monte-Carlo simulation method. Good luck!
+   */
+  std::default_random_engine generator;
+  std::uniform_real_distribution<double> distribution(0.0,1.0);
+  
 
 int main (int argc, char ** argv)
 {
@@ -19,11 +38,11 @@ Current actions:\n\
     case 1: 
       std::cout << helpstr << std::endl;
       break;
-    case 2:
+    case 3:
       ss << argv[1];
       if (!ss.str().compare("-t") || !ss.str().compare ("--test"))
         //run test here.
-        std::cout << "-t" << std::endl;
+        run_test (argv[2]);
       else
         if (!ss.str().compare("--add") || !ss.str().compare ("-a"))
         {
@@ -48,16 +67,11 @@ Current actions:\n\
       }
       if (!ss.str().compare ("-a") || !ss.str().compare ("--add"))
       //run adding here
-      #if __DEBUG__
       {
-        std::stringstream ss;
-        ss << argv[2] << " " << argv[3] << " " << 3 << " " << 0 << std::endl;
-        Word *word = new Word (ss.str());
-        std::cout << word->GetFirstLang () << " " << word->GetSecondLang () << " " << word->GetNumTests () << " " << word->GetNumPassedTests () << std::endl;
-        std::cout << ss.str ();
-        ;
+        Word *word = new Word (argv[2],argv[3],0,0);
+        Dict *dict = new Dict (argv[4]);
+        dict->AddWord (word);
       }
-      #endif
       else
       {
         std::cerr << "Unrecognized action!" << std::endl << "Aborted." << std::endl;

@@ -18,19 +18,18 @@ Word::Word (std::string line)
   unsigned int i=0;
   std::string first_word, second_word;
   while ((i<line.length())&&(!this->space(line[i]))) i++;
-  first_lang = line.substr (0,i+1);
-  std::cout << first_lang << std::endl;
+  first_lang = line.substr (0,i);
   while ((i<line.length())&&(this->space(line[i]))) i++;
   int start_pos = i;
   while ((i<line.length())&&(!this->space(line[i]))) i++;
-  second_lang = line.substr (start_pos,i+1-start_pos);
+  second_lang = line.substr (start_pos,i-start_pos);
   while ((i<line.length())&&(this->space(line[i]))) i++;
   std::stringstream ss;
   start_pos = i;
   while ((i<line.length())&&(!this->space(line[i]))) i++;  
-  ss << line.substr (start_pos, i-start_pos+1);
+  ss << line.substr (start_pos, i-start_pos);
   ss >> num_tests;
-  ss << line.substr (i,line.length()-i+1);
+  ss << line.substr (i,line.length()-i);
   ss >> num_passed_tests;
 }
 
@@ -44,7 +43,7 @@ Word::~Word () {;}
 
 bool Word::operator== (const Word & fWord) const
 {
-  return (!this->first_lang.compare(fWord.first_lang))||
+  return (!this->first_lang.compare(fWord.first_lang))&&
   (!this->second_lang.compare(fWord.second_lang));
 }
   
