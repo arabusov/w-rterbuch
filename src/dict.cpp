@@ -32,9 +32,13 @@ Dict::~Dict ()
   std::ofstream file;
   file.open (file_string.c_str());
   for (unsigned int i=0; i< words.size();i++)
+  {
     file << words[i]->GetFirstLang () << "\t" << words[i]->GetSecondLang () << "\t"
           << words[i]->GetNumTests () << "\t" << words[i]->GetNumPassedTests () 
           << std::endl;
+    delete words[i];
+  }
+  words.clear();
   file.close();
 }
 

@@ -66,6 +66,7 @@ inline int run_test (char * str)
     std::cout << "Failed." << std::endl;
     dict->GetWord (int_rand)->Failed ();
   }
+  delete dict;
   return 0;
 } 
   
@@ -117,6 +118,7 @@ Current actions:\n\
         Word *word = new Word (argv[2],argv[3],0,0);
         Dict *dict = new Dict (argv[4]);
         dict->AddWord (word);
+        delete dict;
       }
       else
       {
