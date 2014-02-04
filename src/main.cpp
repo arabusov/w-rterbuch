@@ -2,6 +2,8 @@
 #include <string>
 #include <sstream>
 //#include "dict.hpp"
+#include "word.hpp"
+#define __DEBUG__ 1
 
 int main (int argc, char ** argv)
 {
@@ -46,7 +48,16 @@ Current actions:\n\
       }
       if (!ss.str().compare ("-a") || !ss.str().compare ("--add"))
       //run adding here
+      #if __DEBUG__
+      {
+        std::stringstream ss;
+        ss << argv[2] << " " << argv[3] << " " << 3 << " " << 0 << std::endl;
+        Word *word = new Word (ss.str());
+        std::cout << word->GetFirstLang () << " " << word->GetSecondLang () << " " << word->GetNumTests () << " " << word->GetNumPassedTests () << std::endl;
+        std::cout << ss.str ();
         ;
+      }
+      #endif
       else
       {
         std::cerr << "Unrecognized action!" << std::endl << "Aborted." << std::endl;

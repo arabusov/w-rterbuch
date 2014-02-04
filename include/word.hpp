@@ -17,5 +17,9 @@ class Word
     bool operator!= (const Word & fWord) const;
     inline void Passed () {num_tests++; num_passed_tests++;};
     inline void Failed () {num_tests++;};
+    inline std::string GetFirstLang (void) { return first_lang; }
+    inline std::string GetSecondLang (void) { return second_lang; }
+    inline unsigned int GetNumTests (void) { return num_tests; }
+    inline unsigned int GetNumPassedTests (void) { return num_passed_tests; }
 };
 #endif
