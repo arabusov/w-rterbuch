@@ -15,13 +15,38 @@ inline void run_test (char * str)
     std::cerr << "Empty dictionary in " << str <<" file! Aborted." << str::endl;
     return -4;
   }
-  /* Now we should create consequence of random words for the test 
+  /*
+   * Now we should create consequence of random words for the test 
    * it should be wise. Simple words should be skipped oftener than hard words.
-   * Simple alhorithm: probability of the word's skiping is equal ratio num_passed_tests
-   * to num_tests. So, now we shall release usual Monte-Carlo simulation method. Good luck!
+   * Simple alhorithm: probability of the word's skiping is proportional to ratio num_passed_tests
+   * and num_tests. So, now we shall release usual Monte-Carlo simulation method. Good luck!
    */
   std::default_random_engine generator;
-  std::uniform_real_distribution<double> distribution(0.0,1.0);
+  std::uniform_real_distribution<double> real_distribution(0.0,1.0); //flat distribution
+  std::uniform_int_distribution<unsigned int> int_distribution (0,dict_size-1);
+  double real_rand;
+  unsigned int int_rand;
+  do
+  {
+    real_rand = real_distribution (generator);
+    int_rand = int_distribution (generator);
+    if (dict->GetWord(int_rand)->GetNumTests != 0)
+      double probability = (double)dict->GetWord(int_rand)->GetNumPassedTests/
+                            (double)dict->GetWord(int_rand)->GetNumTests;
+    else
+      probability = 0;
+  } while (real_rand < probability);
+  unsigned int choose_lang = int_distribution (generator) % 2; //Bug can be possible when DictSize == 1,
+                                                               //but nowbody will use so short
+                                                               //dicts.
+  std::string test_str;
+  if (choose_lang)
+  {
+    std::string base_str = dict->GetWord(int_rand)->GetFirstLang () <<" (enter without spaces!): ";
+    std::cin >> test_str;
+    Word *test_word = new Word (base_str, test_str, 0,0);
+    
+  
   
 
 int main (int argc, char ** argv)
