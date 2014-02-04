@@ -29,6 +29,13 @@ Dict::Dict (std::string file_str)
 
 Dict::~Dict ()
 {
+  std::ofstream file;
+  file.open (file_string.c_str());
+  for (unsigned int i=0; i< words.size();i++)
+    file << words[i]->GetFirstLang () << "\t" << words[i]->GetSecondLang () << "\t"
+          << words[i]->GetNumTests () << "\t" << words[i]->GetNumPassedTests () 
+          << std::endl;
+  file.close();
 }
 
 bool Dict::CheckInDict (Word *fWord)
@@ -57,9 +64,5 @@ void Dict::AddWord (Word *fWord)
       std::cout << "Already exists! " << i << std::endl;
       return;
     }
-  std::ofstream file;
-  file.open (file_string.c_str(), std::ios::app);
   words.push_back (fWord);
-  file << fWord->GetFirstLang () << " " << fWord->GetSecondLang () << " 0 0" << std::endl;
-  file.close();
 }

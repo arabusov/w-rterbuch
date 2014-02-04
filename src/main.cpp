@@ -40,13 +40,30 @@ inline void run_test (char * str)
                                                                //but nowbody will use so short
                                                                //dicts.
   std::string test_str;
+  Word *test_word;
   if (choose_lang)
   {
-    std::string base_str = dict->GetWord(int_rand)->GetFirstLang () <<" (enter without spaces!): ";
+    std::string base_str = dict->GetWord(int_rand)->GetFirstLang () <<": ";
     std::cin >> test_str;
-    Word *test_word = new Word (base_str, test_str, 0,0);
-    
-  
+    test_word = new Word (base_str, test_str, 0,0);
+  }
+  else
+  {
+    std::string base_str = dict->GetWord(int_rand)->GetSecondLang () <<": ";
+    std::cin >> test_str;
+    test_word = new Word (test_str, base_str, 0,0);
+  }
+  if (*test_word == *(dict->GetWord(int_rand)))
+  {
+    std::cout << "Passed." << std::endl;
+    dict->GetWord (int_rand)->Passed ();
+  }
+  else
+  {
+    std::cout << "Failed." << std::endl;
+    dict->GetWord (int_rand)->Failed ();
+  }
+} 
   
 
 int main (int argc, char ** argv)
