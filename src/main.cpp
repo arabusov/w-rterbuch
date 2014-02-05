@@ -87,11 +87,11 @@ inline int run_test (char * str)
 int main (int argc, char ** argv)
 {
   std::string helpstr =
-  "\tWörterbuch ver. 0.01\n\
-Usage: worterbuch ACTION [operands]\n\
+  "\tWörterbuch ver. 0.01-rc1\n\
+Usage: worterbuch ACTION [operands] dictionary_file\n\
 Current actions:\n\
--t, --test: run test;\n\
--a, --add: add word to dictionary, arguments are FIRST_LANG SECOND_LANG DICT_FILE\n";
+-t, --test: run test, argument is dictionary_file;\n\
+-a, --add: add word to dictionary, arguments are FIRST_LANG SECOND_LANG dictionary_file\n";
   std::stringstream ss;
   switch (argc)
   {
