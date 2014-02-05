@@ -15,22 +15,9 @@ inline bool Word::space (char ch)
 
 Word::Word (std::string line)
 {
-  unsigned int i=0;
-  std::string first_word, second_word;
-  while ((i<line.length())&&(!this->space(line[i]))) i++;
-  first_lang = line.substr (0,i);
-  while ((i<line.length())&&(this->space(line[i]))) i++;
-  int start_pos = i;
-  while ((i<line.length())&&(!this->space(line[i]))) i++;
-  second_lang = line.substr (start_pos,i-start_pos);
-  while ((i<line.length())&&(this->space(line[i]))) i++;
   std::stringstream ss;
-  start_pos = i;
-  while ((i<line.length())&&(!this->space(line[i]))) i++;  
-  ss << line.substr (start_pos, i-start_pos);
-  ss >> num_tests;
-  ss << line.substr (i,line.length()-i);
-  ss >> num_passed_tests;
+  ss << line;
+  ss >> first_lang >> second_lang >> num_tests >> num_passed_tests;
 }
 
 Word:: Word ()

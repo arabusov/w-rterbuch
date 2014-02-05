@@ -15,6 +15,7 @@ class Dict
     Dict (std::string filename);
     ~Dict ();
     bool CheckInDict (Word *fWord);
+    int GetWordID (Word *fWord);
     void AddWord (Word *fWord);
     Word *GetWord (unsigned int pos);
     unsigned int GetDictSize (void);

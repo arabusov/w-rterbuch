@@ -50,6 +50,14 @@ bool Dict::CheckInDict (Word *fWord)
   return false;
 }
 
+int Dict::GetWordID (Word *fWord)
+{
+  for (unsigned int i=0;i<words.size();i++)
+    if (*(words[i]) == *fWord)
+      return i;
+  return -1;
+}
+
 unsigned int Dict::GetDictSize (void)
 {
   return words.size();

@@ -5,6 +5,7 @@
 #include "dict.hpp"
 #include "word.hpp"
 #define __DEBUG__ 1
+#define __LINUX__ 1
 
 inline int run_test (char * str)
 {
@@ -21,7 +22,16 @@ inline int run_test (char * str)
    * Simple alhorithm: probability of the word's skiping is proportional to ratio num_passed_tests
    * and num_tests. So, now we shall release usual Monte-Carlo simulation method. Good luck!
    */
-  std::default_random_engine generator;
+  #if __LINUX__
+  unsigned int randomize;
+  std::ifstream rand_file;
+  rand_file.open ("/dev/random");
+  rand_file.read(reinterpret_cast<char*>(&randomize), sizeof(randomize)); 
+  rand_file.close();
+  std::default_random_engine generator(randomize);
+  #else
+  std::default_random_engine generator();
+  #endif
   std::uniform_real_distribution<double> real_distribution(0.0,1.0); //flat distribution
   std::uniform_int_distribution<unsigned int> int_distribution (0,dict_size-1);
   double real_rand;
@@ -33,7 +43,9 @@ inline int run_test (char * str)
     int_rand = int_distribution (generator);
     if (dict->GetWord(int_rand)->GetNumTests ()!= 0)
       probability = (double)dict->GetWord(int_rand)->GetNumPassedTests()/
-                            (double)dict->GetWord(int_rand)->GetNumTests();
+                            (double)(dict->GetWord(int_rand)->GetNumTests()+1);//even in case 100:100 there
+                                                                              //should be nonzero
+                                                                              //probability.
     else
       probability = 0;
   } while (real_rand < probability);
@@ -56,10 +68,11 @@ inline int run_test (char * str)
     std::cin >> test_str;
     test_word = new Word (test_str, base_str, 0,0);
   }
-  if (*test_word == *(dict->GetWord(int_rand)))
+  int wordID = dict->GetWordID (test_word);
+  if (0 <= wordID )
   {
     std::cout << "Passed." << std::endl;
-    dict->GetWord (int_rand)->Passed ();
+    dict->GetWord (wordID)->Passed ();
   }
   else
   {
