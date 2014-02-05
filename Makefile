@@ -36,8 +36,8 @@ clean :
 prepare:
 	mkdir -p bin
 	mkdir -p obj
-	mkdir -p Debug
-	mkdir -p Release
+	mkdir -p obj/Debug
+	mkdir -p obj/Release
 
 release: prepare
 	make --directory=./obj/Release --makefile=../../Makefile build_flags="-O2 -fomit-frame-pointer" program_name=../../bin/dict
