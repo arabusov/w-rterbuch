@@ -33,10 +33,16 @@ VPATH := ../../
 clean :
 	rm -rf bin obj
 
-release:
+prepare:
+	mkdir -p bin
+	mkdir -p obj
+	mkdir -p Debug
+	mkdir -p Release
+
+release: prepare
 	make --directory=./obj/Release --makefile=../../Makefile build_flags="-O2 -fomit-frame-pointer" program_name=../../bin/dict
 
-debug:
+debug: prepare
 	make --directory=./obj/Debug --makefile=../../Makefile build_flags="-O0 -g3 -D_DEBUG" program_name=../../bin/dict_debug
          
 include $(wildcard $(addsuffix /*.d, $(objects_dirs)))
