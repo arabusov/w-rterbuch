@@ -1,6 +1,7 @@
 #include <sstream>
 #include <fstream>
 #include <iostream>
+#include <algorithm>
 #include "dict.hpp"
 
 Dict::Dict ()
@@ -31,12 +32,12 @@ Dict::~Dict ()
 {
   std::ofstream file;
   file.open (file_string.c_str());
-  for (unsigned int i=0; i< words.size();i++)
+  for (auto &it: words)
   {
-    file << words[i]->GetFirstLang () << "\t" << words[i]->GetSecondLang () << "\t"
-          << words[i]->GetNumTests () << "\t" << words[i]->GetNumPassedTests () 
+    file << it->GetFirstLang () << "\t" << it->GetSecondLang () << "\t"
+          << it->GetNumTests () << "\t" << it->GetNumPassedTests () 
           << std::endl;
-    delete words[i];
+    delete it;
   }
   words.clear();
   file.close();
@@ -44,8 +45,8 @@ Dict::~Dict ()
 
 bool Dict::CheckInDict (Word *fWord)
 {
-  for (unsigned int i=0;i<words.size();i++)
-    if (*(words[i]) == *fWord)
+  for (auto &it: words)
+    if (*(it) == *fWord)
       return true;
   return false;
 }
@@ -78,3 +79,6 @@ void Dict::AddWord (Word *fWord)
     }
   words.push_back (fWord);
 }
+
+
+has to use algorithm
