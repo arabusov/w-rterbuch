@@ -35,8 +35,8 @@ Dict::~Dict ()
   for (auto &it: words)
   {
     file << it->GetFirstLang () << "\t" << it->GetSecondLang () << "\t"
-          << it->GetNumTests () << "\t" << it->GetNumPassedTests () 
-          << std::endl;
+      << it->GetNumTests () << "\t" << it->GetNumPassedTests () 
+      << std::endl;
     delete it;
   }
   words.clear();
@@ -45,10 +45,7 @@ Dict::~Dict ()
 
 bool Dict::CheckInDict (Word *fWord)
 {
-  for (auto &it: words)
-    if (*(it) == *fWord)
-      return true;
-  return false;
+  return (std::find (words.begin(), words.end(), fWord) != words.end());
 }
 
 int Dict::GetWordID (Word *fWord)
@@ -59,7 +56,7 @@ int Dict::GetWordID (Word *fWord)
   return -1;
 }
 
-unsigned int Dict::GetDictSize (void)
+unsigned int Dict::GetDictSize ()
 {
   return words.size();
 }
@@ -71,14 +68,13 @@ Word *Dict::GetWord (unsigned int pos)
 
 void Dict::AddWord (Word *fWord)
 {
-  for (int i=0; i< words.size(); i++)
-    if (*words[i] == *fWord)
-    {
-      std::cout << "Already exists! " << i << std::endl;
-      return;
-    }
-  words.push_back (fWord);
+  if (!CheckInDict (fWord))
+  {
+    std::cout << "Already exists! "<< fWord->GetFirstLang() << " " << fWord->GetSecondLang() << std::endl;
+  }
+  else
+  {
+    words.push_back (fWord);
+  }
 }
 
-
-has to use algorithm
