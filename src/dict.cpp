@@ -68,7 +68,7 @@ Word *Dict::GetWord (unsigned int pos)
 
 void Dict::AddWord (Word *fWord)
 {
-  if (!CheckInDict (fWord))
+  if (CheckInDict (fWord))
   {
     std::cout << "Already exists! "<< fWord->GetFirstLang() << " " << fWord->GetSecondLang() << std::endl;
   }
