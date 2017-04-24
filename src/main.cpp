@@ -77,6 +77,8 @@ inline int run_test (char * str)
   else
   {
     std::cout << "Failed." << std::endl;
+    std::cout << dict->GetWord (int_rand)->GetFirstLang () << " = "
+      << dict->GetWord (int_rand)->GetSecondLang() << std::endl;
     dict->GetWord (int_rand)->Failed ();
   }
   delete dict;
