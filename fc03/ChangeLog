@@ -1,0 +1,6 @@
+v0.03:
+  - fix bug when succ==all, tui works on Linux
+v0.02:
+  - fctui is added
+v0.01:
+  - fcadd and fcc have basic functionality
