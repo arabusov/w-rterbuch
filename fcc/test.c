@@ -1,5 +1,5 @@
 /*
- * Flash Cards v0.02
+ * Flash Cards v0.04
  *
  * Test facility for flash cards
  */

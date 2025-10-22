@@ -1,9 +1,10 @@
-# Flash Cards v0.02
+# Flash Cards v0.04
 # Makefile for flashcards
 CC=cc
 LD=cc
 CFLAGS=-O
-LDFLAGS=
+LDFLAGS=-i
+PREFIX=/usr/local
 
 OBJ = io.o fcadd.o test.o fcc.o
 
@@ -23,5 +24,15 @@ test.o:	dict.h io.h test.c
 fcadd.o: dict.h io.h fcadd.c
 io.o: dict.h io.h io.c
 
+install: $(PREFIX)/bin/fcadd $(PREFIX)/bin/fcc $(PREFIX)/bin/fctui
+
+$(PREFIX)/bin/fcadd: fcadd
+	install -cs -o bin fcadd $@
+
+$(PREFIX)/bin/fcc: fcc
+	install -cs -o bin fcc $@
+
+$(PREFIX)/bin/fctui: fctui
+	install -cs -o bin fctui $@
 clean:
 	rm -f *.bak *.o *.s core fcc fcadd fctui

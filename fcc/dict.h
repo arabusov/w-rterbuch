@@ -1,5 +1,5 @@
 /*
- * Flash Cards v0.02
+ * Flash Cards v0.04
  *
  * dict.h: a record structure for flash cards
  */

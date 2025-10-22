@@ -1,5 +1,5 @@
 /*
- * Flash Cards v0.03
+ * Flash Cards v0.04
  *
  * Simple scanner and parser for flash cards to support DICT format
  */
@@ -23,16 +23,18 @@ read_record(struct record *rec, FILE *f)
                         a, b, all, succ));
 }
 
-static int
+int
 read_dict(FILE *f)
 {
-        if (f == NULL)
+        if (f == NULL) {
+        	fprintf(stderr, "File %s couldn't be opened\n");
                 return(0);
+	}
         while(!feof(f)) {
                 int res = read_record(rec, f);
                 if (res == EOF) break;
                 if (res != 4) {
-                        fprintf(stderr, "%td [line]: %d read",
+                        fprintf(stderr, "%d [line]: %d read",
                                         rec-dict + 1, res);
                         return(0);
                 }

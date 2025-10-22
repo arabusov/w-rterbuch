@@ -1,5 +1,5 @@
 /*
- * Flash Cards v0.03
+ * Flash Cards v0.04
  */
 #ifndef __IO_H__
 #define __IO_H__
@@ -12,7 +12,7 @@
 #endif
 extern struct record dict[];
 extern struct record *rec;
-#define NRECS (65536/2/sizeof(struct record))
+#define NRECS (65536/4/sizeof(struct record))
 #define MAXREC (NRECS-1)
 
 #include <stdio.h>
