@@ -3,7 +3,9 @@
 CC=cc
 LD=cc
 CFLAGS=-O
-LDFLAGS=-i
+LDFLAGS=
+TUICF=-DBS=127 -DENTER=10
+TUILF=-lcurses
 PREFIX=/usr/local
 
 OBJ = io.o fcadd.o test.o fcc.o
@@ -11,7 +13,7 @@ OBJ = io.o fcadd.o test.o fcc.o
 all: fcadd fcc fctui
 
 fctui: io.o test.o fctui.o
-	$(LD) $(LDFLAGS) -o fctui fctui.o test.o io.o -lcurses
+	$(CC) $(CFLAGS) $(LDFLAGS) $(TUICF) -o $@ fctui.c test.o io.o $(TUILF)
 
 fcc: io.o test.o fcc.o
 	$(LD) $(LDFLAGS) -o fcc fcc.o test.o io.o

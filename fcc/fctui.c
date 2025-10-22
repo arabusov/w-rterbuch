@@ -16,8 +16,12 @@
 
 int all, succ;
 
+#ifndef BS
 #define BS	8
+#endif
+#ifndef ENTER
 #define ENTER	13
+#endif
 #define ESC	27
 
 /* Reset terminal. */
