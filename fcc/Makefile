@@ -6,7 +6,7 @@ CFLAGS=-O
 LDFLAGS=
 TUICF=-DBS=127 -DENTER=10
 TUILF=-lcurses
-PREFIX=/usr/local
+PREFIX ?=/usr/local
 
 OBJ = io.o fcadd.o test.o fcc.o
 
