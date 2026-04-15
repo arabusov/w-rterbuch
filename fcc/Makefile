@@ -29,12 +29,12 @@ io.o: dict.h io.h io.c
 install: $(PREFIX)/bin/fcadd $(PREFIX)/bin/fcc $(PREFIX)/bin/fctui
 
 $(PREFIX)/bin/fcadd: fcadd
-	install -cs -o bin fcadd $@
+	install -cs fcadd $@
 
 $(PREFIX)/bin/fcc: fcc
-	install -cs -o bin fcc $@
+	install -cs fcc $@
 
 $(PREFIX)/bin/fctui: fctui
-	install -cs -o bin fctui $@
+	install -cs fctui $@
 clean:
 	rm -f *.bak *.o *.s core fcc fcadd fctui
