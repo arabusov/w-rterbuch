@@ -137,6 +137,10 @@ read_file(const char *fname)
 {
 	FILE *f;
 	f = fopen(fname, "r");
+	if (NULL == f) {
+		fprintf(stderr, "Cannot open %s\n", fname);
+		return(0);
+	}
         if (!read_dict(f)) {
                 fprintf(stderr, "Bad format in %s file\n", fname);
                 return(0);
