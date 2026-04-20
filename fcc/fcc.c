@@ -11,6 +11,7 @@
 #include "dict.h"
 #include "io.h"
 #include "test.h"
+#include "bool.h"
 
 char usage[] = "fcc DICTIONARY";
 
@@ -35,7 +36,7 @@ main(int argc, char **argv)
 	assert(r <= rec);
         printf("%s: ", r->a);
         scanf("%31s", buf);
-        if (test(r, buf))
+        if (test(r, buf, TRUE))
         	printf("Succ.\n");
         else
         	printf("Fail. Answer: %s\n", r->b);

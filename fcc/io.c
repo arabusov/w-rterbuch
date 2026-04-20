@@ -27,14 +27,14 @@ int
 read_dict(FILE *f)
 {
         if (f == NULL) {
-        	fprintf(stderr, "File %s couldn't be opened\n");
+        	fprintf(stderr, "Input file couldn't be opened\n");
                 return(0);
 	}
         while(!feof(f)) {
                 int res = read_record(rec, f);
                 if (res == EOF) break;
                 if (res != 4) {
-                        fprintf(stderr, "%d [line]: %d read",
+                        fprintf(stderr, "%ld [line]: %d read",
                                         rec-dict + 1, res);
                         return(0);
                 }

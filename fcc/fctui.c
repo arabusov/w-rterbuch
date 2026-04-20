@@ -13,6 +13,7 @@
 #include "dict.h"
 #include "io.h"
 #include "test.h"
+#include "bool.h"
 
 int all, succ;
 
@@ -37,15 +38,17 @@ readln(char *buf, int len)
 {
 	int i=0, x, y;
 	int ch;
+
+	memset(buf, 0, len);
 	getyx(stdscr, y, x);
 	while (1) {
 		ch = getch();
 		switch (ch) {
 		case ENTER: goto done_readln;
 		case ESC: ch = -1; goto done_readln;
-		case BS: 
+		case BS:
 			if (i > 0) {
-				buf[--i] = '\0'; 
+				buf[--i] = '\0';
 				move(y, x+i);
 				erasechar();
 				refresh();
@@ -70,31 +73,50 @@ done_readln:
 }
 
 int
+continue_or_exit(void)
+{
+	printw("Press \"q\" to finish or any other key to continue.\n");
+	refresh();
+	return(getch());
+}
+
+int
 test_body(void)
 {
 	struct record *r;
 	char buf[MAXLEN];
 	char ch;
+	BOOL first_time = TRUE;
 
 	init_test();
 	r = roll();
 	move(0, 0);
 	printw("Round %d\n", all+1);
-	printw("%s: ", r->a);
-	refresh();
-	readln(buf, MAXLEN-1);
-	refresh();
-	move(1, 0);
-	if (test(r, buf)) {
-		printw("Succ.\n");
-		succ++;
-	} else {
-		printw("Fail. Correct answer: %s\n", r->b);
-		beep();
-	}
-	printw("press \"q\" to finish");
-	refresh();
-	ch = getch();
+	do {
+		printw("%s: ", r->a);
+		refresh();
+		readln(buf, MAXLEN-1);
+		refresh();
+		move(1, 0);
+		if (test(r, buf, first_time)) { /* record if first time passed */
+			clear();
+			printw("Correct!\n");
+			if (first_time)
+				succ++;
+			ch = continue_or_exit();
+			break;
+		} else {
+			first_time = FALSE;
+			clear();
+			printw("Wrong! Correct answer for %s: %s\n", r->a, r->b);
+			beep();
+			ch = continue_or_exit();
+			if ('q' == ch)
+				break;
+			printw("Try again. ");
+			refresh();
+		}
+	} while (!first_time);
 	clear();
 	refresh();
 	return(ch);

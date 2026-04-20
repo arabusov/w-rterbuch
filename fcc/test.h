@@ -12,6 +12,6 @@ extern struct record *
 roll(void);
 
 extern int
-test(struct record *, const char *);
+test(struct record *, const char *, int);
 
 #endif

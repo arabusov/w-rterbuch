@@ -52,13 +52,15 @@ roll(void)
 }
 
 int
-test(struct record *r, const char *buf)
+test(struct record *r, const char *buf, int record_result)
 {
 	int res = 0;
 	if (0 == strcmp(buf, r->b)) {
 		res = 1;
-		r->succ ++;
+		if (record_result)
+			r->succ ++;
 	}
-	r->all++;
+	if (record_result)
+		r->all++;
 	return(res);
 }
