@@ -2,7 +2,7 @@
 #define RANDOM_H
 
 void
-randomize(int);
+randomize(unsigned);
 
 float
 next_random(float);
