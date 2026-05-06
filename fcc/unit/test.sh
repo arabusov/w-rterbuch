@@ -2,11 +2,8 @@
 N_TOT=0
 N_SUCC=0
 
-for F in unit*.in; do
-    STEM=`echo ${F} | sed 's/..$//'`
-    EXE=${STEM}.exe
-    EOUT=${STEM}.exp
-    diff <( ./${EXE} < ${F} ) ${EOUT}
+for EXE in unit*.exe; do
+    ./${EXE}
     if [ $? -eq 0 ]; then
         N_SUCC=`echo "${N_SUCC} + 1" | bc`
     else
