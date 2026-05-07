@@ -3,9 +3,9 @@
  *
  * Test facility for flash cards
  */
-#include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include "random.h"
 #include "dict.h"
 #include "io.h"
 
@@ -29,7 +29,7 @@ init_test(void)
 	time_t unix_time;
 	/* init rng */
 	time(&unix_time);
-	srand(unix_time);
+	randomize(unix_time);
 	/* calc number of fails and shift by one */
 	sum_fail = 0.; /* allows us to reinit the test in one session */
 	for (r = dict; r <= rec; r++) {
@@ -41,7 +41,7 @@ struct record *
 roll(void)
 {
 	struct record *r;
-	float dice = (float)rand()/(float)RAND_MAX*sum_fail;
+	float dice = next_random(sum_fail);
 	float pos = 0.;
 	for (r = dict; r <= rec; r++) {
 		pos += prob(r);
