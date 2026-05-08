@@ -47,3 +47,4 @@ $(PREFIX)/bin/fctui: fctui
 	install -cs fctui $@
 clean:
 	rm -f *.bak *.o *.s core fcc fcadd fctui
+	make -C unit clean
