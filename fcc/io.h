@@ -15,10 +15,10 @@ extern struct record *rec;
 #define NRECS (65536/4/sizeof(struct record))
 #define MAXREC (NRECS-1)
 
-#include <stdio.h>
+#include "bool.h"
 
-extern int add_record(char *fname, int argc, char **argv);
-extern int write_file(const char *fname);
-extern int read_file(const char *fname);
+extern BOOL add_record(char *fname, int argc, char **argv);
+extern BOOL write_file(const char *fname);
+extern BOOL read_file(const char *fname);
 
 #endif /* __IO_H__ */
