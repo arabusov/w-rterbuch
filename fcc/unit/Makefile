@@ -23,8 +23,11 @@ unit02_cov:
 	@gcov -o ./ ../io.c unit02.c -m
 
 cov: test unit01_cov unit02_cov
-	@gcovr -r ../
+	mkdir -p coverage
+	@gcovr -r ../ --txt --branches
+	@gcovr -r ../ --html-self-contained --html-details -o coverage/fcc.html
 
 clean:
 	rm -f $(TESTS)
 	rm -f *.gc*
+	rm -rf coverage

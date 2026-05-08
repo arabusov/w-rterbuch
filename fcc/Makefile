@@ -12,6 +12,8 @@ all: fcadd fcc fctui
 
 test:
 	@make -C unit
+cov:
+	@make -C unit cov
 
 indent:
 	indent -kr -i8 *.[ch]
