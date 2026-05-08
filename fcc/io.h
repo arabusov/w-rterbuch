@@ -21,4 +21,4 @@ extern BOOL add_record(char *fname, int argc, char **argv);
 extern BOOL write_file(const char *fname);
 extern BOOL read_file(const char *fname);
 
-#endif /* __IO_H__ */
+#endif				/* __IO_H__ */

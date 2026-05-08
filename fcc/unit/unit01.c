@@ -18,8 +18,7 @@ BOOL test_rep_occur(const char *s, float exp, float obt)
 {
 	float delta = exp - obt;
 
-        printf("%3s: %1.6f %1.6f %+1.5f",
-	       s, exp, obt, delta);
+	printf("%3s: %1.6f %1.6f %+1.5f", s, exp, obt, delta);
 	if (fabs(delta) < THR) {
 		printf("     Ok.\n");
 		return TRUE;
@@ -31,18 +30,18 @@ BOOL test_rep_occur(const char *s, float exp, float obt)
 
 void test_precalc(float *av, float *var)
 {
-        int i;
+	int i;
 
-        *av = 0.f;
-        *var = 0.f;
-        randomize(0);
-        for (i = 0; i < N; i++) {
-                float x = next_random(RANGE);
-                *av += x;
-                *var += x*x;
-        }
-        *av /= (float)N;
-        *var = *var/(float)N - *av * *av;
+	*av = 0.f;
+	*var = 0.f;
+	randomize(0);
+	for (i = 0; i < N; i++) {
+		float x = next_random(RANGE);
+		*av += x;
+		*var += x * x;
+	}
+	*av /= (float) N;
+	*var = *var / (float) N - *av * *av;
 }
 
 BOOL test_report(float av, float var, const float expa, const float expv)
@@ -57,15 +56,15 @@ BOOL test_report(float av, float var, const float expa, const float expv)
 	test_res = test_rep_occur("var", expv, var) && test_res;
 	printf("---------------------------------------\n");
 
-        return test_res;
+	return test_res;
 }
 
 int main(void)
 {
-        float av, var;
-	const float exp_av = RANGE/2., exp_var = RANGE*RANGE/12.;
+	float av, var;
+	const float exp_av = RANGE / 2., exp_var = RANGE * RANGE / 12.;
 
-        test_precalc(&av, &var);
+	test_precalc(&av, &var);
 
-        return !test_report(av, var, exp_av, exp_var);
+	return !test_report(av, var, exp_av, exp_var);
 }

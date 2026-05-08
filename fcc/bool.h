@@ -11,4 +11,4 @@
 
 typedef int BOOL;
 
-#endif /* BOOLEAN_H */
+#endif				/* BOOLEAN_H */

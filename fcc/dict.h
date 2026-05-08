@@ -9,11 +9,10 @@
 #define MAXLEN          32
 #define DELIM           ' '
 
-struct record
-{
-        char a[MAXLEN], b[MAXLEN];
-        int all, succ;
-        unsigned time;
+struct record {
+	char a[MAXLEN], b[MAXLEN];
+	int all, succ;
+	unsigned time;
 };
 
 #endif

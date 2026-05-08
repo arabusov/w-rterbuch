@@ -26,17 +26,15 @@ int all, succ;
 #define ESC	27
 
 /* Reset terminal. */
-void
-close_curses(void)
+void close_curses(void)
 {
 	refresh();
 	endwin();
 }
 
-void
-readln(char *buf, int len)
+void readln(char *buf, int len)
 {
-	int i=0, x, y;
+	int i = 0, x, y;
 	int ch;
 
 	memset(buf, 0, len);
@@ -44,12 +42,15 @@ readln(char *buf, int len)
 	while (1) {
 		ch = getch();
 		switch (ch) {
-		case ENTER: goto done_readln;
-		case ESC: ch = -1; goto done_readln;
+		case ENTER:
+			goto done_readln;
+		case ESC:
+			ch = -1;
+			goto done_readln;
 		case BS:
 			if (i > 0) {
 				buf[--i] = '\0';
-				move(y, x+i);
+				move(y, x + i);
 				erasechar();
 				refresh();
 			}
@@ -57,13 +58,13 @@ readln(char *buf, int len)
 		default:
 			if (i >= len)
 				break;
-			buf[i++] = (char)ch;
+			buf[i++] = (char) ch;
 			addch(ch);
 			refresh();
 			break;
 		}
 	}
-done_readln:
+      done_readln:
 	if (ch < 0) {
 		close_curses();
 		printf("\nRunning away? I won't update your score.\n");
@@ -72,16 +73,14 @@ done_readln:
 	buf[i] = '\0';
 }
 
-int
-continue_or_exit(void)
+int continue_or_exit(void)
 {
 	printw("Press \"q\" to finish or any other key to continue.\n");
 	refresh();
-	return(getch());
+	return (getch());
 }
 
-int
-test_body(void)
+int test_body(void)
 {
 	struct record *r;
 	char buf[MAXLEN];
@@ -91,14 +90,14 @@ test_body(void)
 	init_test();
 	r = roll();
 	move(0, 0);
-	printw("Round %d\n", all+1);
+	printw("Round %d\n", all + 1);
 	do {
 		printw("%s: ", r->a);
 		refresh();
-		readln(buf, MAXLEN-1);
+		readln(buf, MAXLEN - 1);
 		refresh();
 		move(1, 0);
-		if (test(r, buf, first_time)) { /* record if first time passed */
+		if (test(r, buf, first_time)) {	/* record if first time passed */
 			clear();
 			printw("Correct!\n");
 			if (first_time)
@@ -108,7 +107,8 @@ test_body(void)
 		} else {
 			first_time = FALSE;
 			clear();
-			printw("Wrong! Correct answer for %s: %s\n", r->a, r->b);
+			printw("Wrong! Correct answer for %s: %s\n", r->a,
+			       r->b);
 			beep();
 			ch = continue_or_exit();
 			if ('q' == ch)
@@ -119,22 +119,20 @@ test_body(void)
 	} while (!first_time);
 	clear();
 	refresh();
-	return(ch);
+	return (ch);
 }
 
-void
-test_loop(void)
+void test_loop(void)
 {
 	int ch = 0;
-	while('q' != ch) {
+	while ('q' != ch) {
 		ch = test_body();
 		all++;
 	}
 }
 
 /* Set terminal to raw mode. */
-void
-init_curses(void)
+void init_curses(void)
 {
 	initscr();
 	raw();
@@ -143,27 +141,25 @@ init_curses(void)
 	refresh();
 }
 
-void
-summary(void)
+void summary(void)
 {
 	printf("Success/all: %d/%d, accuracy=%.1f%%\n",
-	       succ, all, 100.*succ/all);
+	       succ, all, 100. * succ / all);
 }
 
 char usage[] = "fctui DICTIONARY";
 
-int
-main(int argc, char **argv)
+int main(int argc, char **argv)
 {
 	const char *fname = argv[1];
 
 	if (argc != 2) {
 		fprintf(stderr, "Wrong number of parameters.\n");
 		fprintf(stderr, "Usage: %s\n", usage);
-		return(-1);
+		return (-1);
 	}
 	if (!read_file(fname)) {
-		return(-1);
+		return (-1);
 	}
 
 	init_curses();
@@ -173,6 +169,6 @@ main(int argc, char **argv)
 	summary();
 
 	if (write_file(fname))
-		return(0);
+		return (0);
 	return -1;
 }

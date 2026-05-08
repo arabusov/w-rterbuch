@@ -9,8 +9,14 @@ TUILF=-lcurses
 PREFIX ?=/usr/local
 
 all: fcadd fcc fctui
+
 test:
 	@make -C unit
+
+indent:
+	indent -kr -i8 *.[ch]
+	rm -f *~
+	make -C unit indent
 
 FCLIB=test.o random.o io.o
 
