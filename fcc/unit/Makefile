@@ -1,5 +1,5 @@
 TESTS=unit01.exe unit02.exe
-CFLAGS=-I..
+CFLAGS=-I.. --coverage
 
 all: test
 
@@ -10,11 +10,21 @@ indent:
 	indent -kr -i8 *.[ch]
 	rm -f *~
 
-unit01.exe: unit01.c ../random.c ../random.h
+unit01.exe: unit01.c ../random.h ../random.c
 	$(CC) $(CFLAGS) $(LDFLAGS) -lm -o $@ $^
 
-unit02.exe: unit02.c ../io.c ../io.h
-	$(CC) $(CFLAGS) $(LDFLAGS) -lm -o $@ $^
+unit02.exe: unit02.c ../io.h ../io.c
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^
+
+unit01_cov: 
+	@gcov -o ./ ../random.c unit01.c -m
+
+unit02_cov: 
+	@gcov -o ./ ../io.c unit02.c -m
+
+cov: test unit01_cov unit02_cov
+	@gcovr -r ../
 
 clean:
 	rm -f $(TESTS)
+	rm -f *.gc*
