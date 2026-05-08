@@ -12,4 +12,5 @@ for EXE in unit*.exe; do
     N_TOT=`echo "${N_TOT} + 1" | bc`
 done
 
-echo "Passed:   ${N_SUCC}/${N_TOT}"
+echo "======================================="
+printf "Passed: \t${N_SUCC}/${N_TOT}\n"
