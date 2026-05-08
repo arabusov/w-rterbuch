@@ -33,6 +33,8 @@ void test_precalc(float *av, float *var)
 {
         int i;
 
+        *av = 0.f;
+        *var = 0.f;
         randomize(0);
         for (i = 0; i < N; i++) {
                 float x = next_random(RANGE);
