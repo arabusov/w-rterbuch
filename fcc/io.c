@@ -18,7 +18,7 @@ static void reset_dict(void)
 	rec = dict;
 }
 
-static BOOL read_record(struct record *rec, FILE *f)
+static BOOL read_record(struct record *rec, FILE * f)
 {
 	char *a = rec->a;
 	char *b = rec->b;
@@ -28,38 +28,34 @@ static BOOL read_record(struct record *rec, FILE *f)
 	return (fscanf(f, "%s %s %d %d", a, b, all, succ));
 }
 
-static BOOL read_dict(FILE *f)
+static BOOL read_dict(FILE * f)
 {
 	while (!feof(f)) {
 		int res = read_record(rec, f);
 		if (res == EOF)
 			break;
 		if (res != 4) {
-			fprintf(stderr, "%ld [line]: %d read, 4 expected:",
+			fprintf(stderr,
+				"%ld [line]: %d read, 4 expected\n",
 				rec - dict + 1, res);
 			return (FALSE);
 		}
 		rec++;
 		if (rec - dict >= (ptrdiff_t) MAXREC) {
-			fprintf(stderr, "Out of memory: ");
+			fprintf(stderr, "Out of memory\n");
 			return (FALSE);
 		}
 	}
 	return (TRUE);
 }
 
-static BOOL save_dict(FILE *f)
+static BOOL save_dict(FILE * f)
 {
 	struct record *r;
-	int wres = 0;
 
 	for (r = dict; r < rec; r++) {
-		wres = fprintf(f, "%s%c%s%c%d%c%d%s", r->a, DELIM, r->b,
-			       DELIM, r->all, DELIM, r->succ, EOL);
-		if (wres < 8) {	/* number of transmitted items in printf */
-			fprintf(stderr, "I/O error saving %s @%d\n",
-				r->a, (ptrdiff_t) (r - dict));
-		}
+		fprintf(f, "%s%c%s%c%d%c%d%s", r->a, DELIM, r->b,
+			DELIM, r->all, DELIM, r->succ, EOL);
 	}
 	return (TRUE);
 }
@@ -89,7 +85,11 @@ extern BOOL add_record(char *fname, int argc, char **argv)
 	if (f == NULL)
 		f = fopen(fname, "w");
 	else if (!read_dict(f)) {
-		fprintf(stderr, " Read error.\n");
+		fprintf(stderr, "Read error.\n");
+		return (FALSE);
+	}
+	if (NULL == f) {
+		fprintf(stderr, "Cannot open %s path for I/O\n", fname);
 		return (FALSE);
 	}
 	fclose(f);
@@ -110,16 +110,9 @@ extern BOOL add_record(char *fname, int argc, char **argv)
 	}
 
 	f = fopen(fname, "w");
-	if (NULL == f) {
-		fprintf(stderr, "Cannot open %s to write file\n", fname);
-		return (FALSE);
-	}
-	if (save_dict(f) == 0) {
-		fclose(f);
-		fprintf(stderr, "File %s is not written\n", fname);
-		return (FALSE);
-	}
+	save_dict(f);
 	fclose(f);
+
 	return (TRUE);
 }
 
@@ -133,11 +126,7 @@ extern BOOL read_file(const char *fname)
 	}
 
 	reset_dict();		/* always read into a tidy memory */
-	if (!read_dict(f)) {
-		fprintf(stderr, "Bad format in %s file\n", fname);
-		return (FALSE);
-	}
-	return (TRUE);
+	return (read_dict(f));
 }
 
 extern BOOL write_file(const char *fname)
@@ -148,10 +137,8 @@ extern BOOL write_file(const char *fname)
 		fprintf(stderr, "Cannot open %s to write file\n", fname);
 		return (FALSE);
 	}
-	if (0 == save_dict(f)) {
-		fprintf(stderr, "I/O error while saving dictionary\n");
-		return (FALSE);
-	}
+	save_dict(f);
 	fclose(f);
+
 	return (TRUE);
 }

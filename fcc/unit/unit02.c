@@ -9,8 +9,6 @@
 #define TEST1_FNAME "test1.dict"
 #define TEST2_FNAME "test2.dict"
 
-BOOL wf, rf, cmp;
-
 void test_init(void)
 {
 	char lang1[MAXLEN], lang2[MAXLEN];
@@ -39,6 +37,61 @@ BOOL test_add_record(void)
 {
 	char *args[3];
 	return (FALSE == add_record(TEST1_FNAME, 3, args));
+}
+
+BOOL test_oom(void)
+{
+	FILE *f;
+	BOOL res = FALSE;
+	int i;
+
+	f = fopen(TEST1_FNAME, "w");
+	for (i = 0; i < NRECS; i++) {
+		fprintf(f, "%d b 0 0\n", i);
+	}
+	fclose(f);
+	res = read_file(TEST1_FNAME);
+	remove(TEST1_FNAME);
+
+	return (FALSE == res);
+}
+
+FILE *make_ill_formatted(void)
+{
+	FILE *f;
+
+	f = fopen(TEST1_FNAME, "w");
+	fprintf(f, ";ZCDI ;TCID ;:itCd  ;:ICD\n");
+	fclose(f);
+
+	return (f);
+}
+
+BOOL test_wrong_format(void)
+{
+	BOOL res = FALSE;
+	FILE *f;
+
+	f = make_ill_formatted();
+
+	res = (FALSE == read_file(TEST1_FNAME));
+	remove(TEST1_FNAME);
+
+	return (res);
+}
+
+BOOL test_add_to_wrong(void)
+{
+	BOOL res = FALSE;
+	FILE *f;
+	char *args[2] = { "", "" };
+
+	f = make_ill_formatted();
+
+	res = (FALSE == add_record(TEST1_FNAME, 2, args));
+	remove(TEST1_FNAME);
+
+	return (res);
 }
 
 BOOL test_cmp(void)
@@ -73,18 +126,6 @@ BOOL test_cmp(void)
 	return (res);
 }
 
-void test_routine(void)
-{
-	test_init();
-	rf = read_file(TEST1_FNAME);
-	wf = write_file(TEST2_FNAME);
-
-	cmp = test_cmp();
-
-	assert(remove(TEST1_FNAME) == 0);
-	assert(remove(TEST2_FNAME) == 0);
-}
-
 BOOL test_empty(void)
 {
 	FILE *f;
@@ -94,6 +135,45 @@ BOOL test_empty(void)
 	fclose(f);
 
 	return (read_file(TEST1_FNAME));
+}
+
+BOOL test_nonexist(void)
+{
+	char *args[2];
+	return (FALSE == add_record("43f0/0", 2, args));
+}
+
+BOOL test_read_nonex(void)
+{
+	return (FALSE == read_file("43f0/0"));
+}
+
+BOOL test_write_nonex(void)
+{
+	return (FALSE == write_file("43f0/0"));
+}
+
+BOOL wf, rf, cmp, empty, addrec, oom, wrong_format, ne, add_to_wrong, rne,
+    wne;
+
+void test_routine(void)
+{
+	test_init();
+	rf = read_file(TEST1_FNAME);
+	wf = write_file(TEST2_FNAME);
+
+	cmp = test_cmp();
+	empty = test_empty();
+	addrec = test_add_record();
+	wrong_format = test_wrong_format();
+	add_to_wrong = test_add_to_wrong();
+	oom = test_oom();
+	ne = test_nonexist();
+	rne = test_read_nonex();
+	wne = test_write_nonex();
+
+	remove(TEST1_FNAME);
+	remove(TEST2_FNAME);
 }
 
 BOOL test_rep_occur(const char *s, BOOL res)
@@ -111,13 +191,18 @@ BOOL test_report(void)
 {
 	BOOL test_res = TRUE;
 
-	printf("Test 02:\tI/O\n");
 	printf("---------------------------------------\n");
-	test_res = test_rep_occur("empty", test_empty()) && test_res;
-	test_res = test_rep_occur("arec", test_add_record()) && test_res;
+	test_res = test_rep_occur("empty", empty) && test_res;
+	test_res = test_rep_occur("arec", addrec) && test_res;
 	test_res = test_rep_occur("read", rf) && test_res;
+	test_res = test_rep_occur("rne", rne) && test_res;
 	test_res = test_rep_occur("write", wf) && test_res;
+	test_res = test_rep_occur("wne", wne) && test_res;
 	test_res = test_rep_occur("cmp", cmp) && test_res;
+	test_res = test_rep_occur("wf", wrong_format) && test_res;
+	test_res = test_rep_occur("a2w", add_to_wrong) && test_res;
+	test_res = test_rep_occur("oom", oom) && test_res;
+	test_res = test_rep_occur("ne", ne) && test_res;
 	printf("---------------------------------------\n");
 
 	remove(TEST1_FNAME);
@@ -134,6 +219,7 @@ BOOL test_report(void)
 
 int main(void)
 {
+	printf("\nTest 02:\tI/O\n");
 	test_routine();
 
 	return !test_report();
