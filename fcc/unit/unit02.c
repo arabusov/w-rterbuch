@@ -85,6 +85,17 @@ void test_routine(void)
 	assert(remove(TEST2_FNAME) == 0);
 }
 
+BOOL test_empty(void)
+{
+	FILE *f;
+
+	remove(TEST1_FNAME);
+	f = fopen(TEST1_FNAME, "w");
+	fclose(f);
+
+	return (read_file(TEST1_FNAME));
+}
+
 BOOL test_rep_occur(const char *s, BOOL res)
 {
 	printf("%5s:                         ", s);
@@ -102,11 +113,15 @@ BOOL test_report(void)
 
 	printf("Test 02:\tI/O\n");
 	printf("---------------------------------------\n");
+	test_res = test_rep_occur("empty", test_empty()) && test_res;
+	test_res = test_rep_occur("arec", test_add_record()) && test_res;
 	test_res = test_rep_occur("read", rf) && test_res;
 	test_res = test_rep_occur("write", wf) && test_res;
 	test_res = test_rep_occur("cmp", cmp) && test_res;
-	test_res = test_rep_occur("arec", test_add_record()) && test_res;
 	printf("---------------------------------------\n");
+
+	remove(TEST1_FNAME);
+	remove(TEST2_FNAME);
 
 	if (test_res) {
 		printf("Test 02:\tOk.\n");

@@ -30,10 +30,6 @@ static BOOL read_record(struct record *rec, FILE *f)
 
 static BOOL read_dict(FILE *f)
 {
-	if (f == NULL) {
-		fprintf(stderr, "Input file couldn't be opened\n");
-		return (FALSE);
-	}
 	while (!feof(f)) {
 		int res = read_record(rec, f);
 		if (res == EOF)
@@ -49,10 +45,6 @@ static BOOL read_dict(FILE *f)
 			return (FALSE);
 		}
 	}
-	if (rec == dict) {
-		fprintf(stderr, "Empty dict\n");
-		return (FALSE);
-	}
 	return (TRUE);
 }
 
@@ -61,10 +53,6 @@ static BOOL save_dict(FILE *f)
 	struct record *r;
 	int wres = 0;
 
-	if (f == NULL) {
-		fprintf(stderr, "Write error\n");
-		return (FALSE);
-	}
 	for (r = dict; r < rec; r++) {
 		wres = fprintf(f, "%s%c%s%c%d%c%d%s", r->a, DELIM, r->b,
 			       DELIM, r->all, DELIM, r->succ, EOL);
@@ -122,6 +110,10 @@ extern BOOL add_record(char *fname, int argc, char **argv)
 	}
 
 	f = fopen(fname, "w");
+	if (NULL == f) {
+		fprintf(stderr, "Cannot open %s to write file\n", fname);
+		return (FALSE);
+	}
 	if (save_dict(f) == 0) {
 		fclose(f);
 		fprintf(stderr, "File %s is not written\n", fname);
@@ -152,6 +144,10 @@ extern BOOL write_file(const char *fname)
 {
 	FILE *f;
 	f = fopen(fname, "w");
+	if (NULL == f) {
+		fprintf(stderr, "Cannot open %s to write file\n", fname);
+		return (FALSE);
+	}
 	if (0 == save_dict(f)) {
 		fprintf(stderr, "I/O error while saving dictionary\n");
 		return (FALSE);
