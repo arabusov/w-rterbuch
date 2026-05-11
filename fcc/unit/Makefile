@@ -1,5 +1,5 @@
 TESTS=unit01.exe unit02.exe
-CFLAGS=-I.. --coverage
+CFLAGS=-g -ggdb -I.. --coverage
 
 all: test
 
@@ -24,7 +24,8 @@ unit02_cov:
 
 cov: test unit01_cov unit02_cov
 	mkdir -p coverage
-	@gcovr -r ../ --txt --branches
+	@rm -rf unit*.gc*
+	@gcovr -r ../ --txt
 	@gcovr -r ../ --html-self-contained --html-details -o coverage/fcc.html
 
 clean:

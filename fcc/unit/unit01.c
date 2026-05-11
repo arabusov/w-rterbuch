@@ -48,13 +48,20 @@ BOOL test_report(float av, float var, const float expa, const float expv)
 {
 	BOOL test_res = TRUE;
 
-	printf("Test 01: RNG\n");
+	printf("Test 01:\tRNG\n");
 	printf("---------------------------------------\n");
 	printf("         exp.     obt.   |diff| Passed?\n");
 	printf("---------------------------------------\n");
 	test_res = test_rep_occur("avg", expa, av) && test_res;
 	test_res = test_rep_occur("var", expv, var) && test_res;
 	printf("---------------------------------------\n");
+
+	if (test_res) {
+		printf("Test 01:\tOk.\n");
+		return (TRUE);
+	}
+	printf("Test 01:\tFail.\n");
+
 
 	return test_res;
 }
