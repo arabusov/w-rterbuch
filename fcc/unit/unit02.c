@@ -46,9 +46,10 @@ BOOL test_oom(void)
 	int i;
 
 	f = fopen(TEST1_FNAME, "w");
-	for (i = 0; i < NRECS; i++) {
+	for (i = 0; i < NRECS + 1; i++) {
 		fprintf(f, "%d b 0 0\n", i);
 	}
+	printf("Created %d records\n", i);
 	fclose(f);
 	res = read_file(TEST1_FNAME);
 	remove(TEST1_FNAME);
@@ -219,7 +220,7 @@ BOOL test_report(void)
 
 int main(void)
 {
-	printf("\nTest 02:\tI/O\n");
+	printf("\nTest 02:\tI/O.\n");
 	test_routine();
 
 	return !test_report();

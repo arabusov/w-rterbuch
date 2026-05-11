@@ -41,7 +41,7 @@ static BOOL read_dict(FILE * f)
 			return (FALSE);
 		}
 		rec++;
-		if (rec - dict >= (ptrdiff_t) MAXREC) {
+		if ((rec - dict) >= (ptrdiff_t) MAXREC) {
 			fprintf(stderr, "Out of memory\n");
 			return (FALSE);
 		}
