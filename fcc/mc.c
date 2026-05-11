@@ -20,7 +20,7 @@ static float prob(struct record *r)
 	return 1. / (r->all + 1.);
 }
 
-void init_test(void)
+extern void init_mc(void)
 {
 	struct record *r;
 	time_t unix_time;
@@ -28,13 +28,13 @@ void init_test(void)
 	time(&unix_time);
 	randomize(unix_time);
 	/* calc number of fails and shift by one */
-	sum_fail = 0.;		/* allows us to reinit the test in one session */
+	sum_fail = 0.;		/* allows us to reinit the MC engine in one session */
 	for (r = dict; r <= rec; r++) {
 		sum_fail += prob(r);
 	}
 }
 
-struct record *roll(void)
+extern struct record *roll(void)
 {
 	struct record *r;
 	float dice = next_random(sum_fail);
@@ -47,7 +47,7 @@ struct record *roll(void)
 	return r;
 }
 
-int test(struct record *r, const char *buf, int record_result)
+extern int mc(struct record *r, const char *buf, int record_result)
 {
 	int res = 0;
 	if (0 == strcmp(buf, r->b)) {

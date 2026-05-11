@@ -10,7 +10,7 @@
 #include <time.h>
 #include "dict.h"
 #include "io.h"
-#include "test.h"
+#include "mc.h"
 #include "bool.h"
 
 char usage[] = "fcc DICTIONARY";
@@ -30,12 +30,12 @@ int main(int argc, char **argv)
 	if (!read_file(fname))
 		return (-1);
 
-	init_test();
+	init_mc();
 	r = roll();
 	assert(r <= rec);
 	printf("%s: ", r->a);
 	scanf("%31s", buf);
-	if (test(r, buf, TRUE))
+	if (mc(r, buf, TRUE))
 		printf("Succ.\n");
 	else
 		printf("Fail. Answer: %s\n", r->b);

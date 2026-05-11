@@ -12,7 +12,7 @@
 
 #include "dict.h"
 #include "io.h"
-#include "test.h"
+#include "mc.h"
 #include "bool.h"
 
 int all, succ;
@@ -87,7 +87,7 @@ int test_body(void)
 	char ch;
 	BOOL first_time = TRUE;
 
-	init_test();
+	init_mc();
 	r = roll();
 	move(0, 0);
 	printw("Round %d\n", all + 1);
@@ -97,7 +97,7 @@ int test_body(void)
 		readln(buf, MAXLEN - 1);
 		refresh();
 		move(1, 0);
-		if (test(r, buf, first_time)) {	/* record if first time passed */
+		if (mc(r, buf, first_time)) {	/* record if first time passed */
 			clear();
 			printw("Correct!\n");
 			if (first_time)

@@ -5,10 +5,10 @@
 #define _TEST_H_
 #include "dict.h"
 
-extern void init_test(void);
+extern void init_mc(void);
 
 extern struct record *roll(void);
 
-extern int test(struct record *, const char *, int);
+extern int mc(struct record *, const char *, int);
 
 #endif

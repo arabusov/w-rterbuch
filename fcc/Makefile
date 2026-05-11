@@ -20,20 +20,20 @@ indent:
 	rm -f *~
 	make -C unit indent
 
-FCLIB=test.o random.o io.o
+FCLIB=mc.o random.o io.o
 
-fctui: io.o test.o random.o fctui.o
+fctui: $(FCLIB) fctui.o
 	$(CC) $(CFLAGS) $(LDFLAGS) $(TUICF) -o $@ fctui.c $(FCLIB) $(TUILF)
 
-fcc: io.o test.o random.o fcc.o
+fcc: io.o mc.o random.o fcc.o
 	$(LD) $(LDFLAGS) -o fcc fcc.o $(FCLIB)
 
 fcadd: fcadd.o io.o
 	$(LD) $(LDFLAGS) -o fcadd fcadd.o io.o
 
 random.o: random.h random.c
-fcc.o: test.h io.h dict.h fcc.c
-test.o:	dict.h io.h test.c
+fcc.o: mc.h io.h dict.h fcc.c
+mc.o:	dict.h io.h mc.c
 fcadd.o: dict.h io.h fcadd.c
 io.o: dict.h io.h io.c
 
