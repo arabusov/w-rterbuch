@@ -4,7 +4,7 @@
 #include "io.h"
 #include <stdio.h>
 
-char usage[] = "add DICTIONARY WORD1 WORD2";
+char usage[] = "fcadd DICTIONARY WORD1 WORD2";
 
 int main(int argc, char **argv)
 {
