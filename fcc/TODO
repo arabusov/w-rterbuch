@@ -1,14 +1,14 @@
 High priority:
-  - Add custom DICT parser instead of scanf
-  - Add time field and decay time
-  - Write documentation
-  - Add -h option to all binaries
   - Memory usage: use dynamic allocation
+  - Add custom DICT parser instead of scanf
   - Optimize floating-point math to fixed-point
   - Refactor error messages
   - Unify version distribution (config.h?)
-  - Add default dictionary (somewhere in ${HOME}/.fc ?)
 Low priority:
-  - Add flipped flashcard test
+  - Write documentation
+  - Add -h option to all binaries
+  - Add time field and decay time (Anki ?)
+  - Add flipped flashcard test (? Is it possible at all?)
   - Improve curses UI/UX (how?)
   - Add GUI
+  - Add default dictionary (somewhere in ${HOME}/.fc ?)
