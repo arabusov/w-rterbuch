@@ -1,7 +1,7 @@
 /*
  * Flash Cards v0.04
  *
- * Test facility for flash cards
+ * The Monte-Carlo engine for the flash cards
  */
 #include <string.h>
 #include <time.h>

@@ -1,5 +1,7 @@
 /*
  * Flash Cards v0.04
+ *
+ * Interface for the Monte-Carlo engine.
  */
 #ifndef _TEST_H_
 #define _TEST_H_
