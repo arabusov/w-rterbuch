@@ -20,7 +20,7 @@ void test_init(void)
 	BOOL ar;
 
 	for (i = 0; i < MAXLEN - 1; i++) {
-		lang1[i] = 'a' + i;
+		lang1[i] = 'a' + i - 1;
 		lang2[i] = 'A' + i;
 	}
 
