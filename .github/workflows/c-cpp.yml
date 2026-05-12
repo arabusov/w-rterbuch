@@ -1,0 +1,21 @@
+name: fcc CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: make
+      run: make -C fcc
+    - name: make test
+      run: make -C fcc test
+    - name: make coverage
+      run: make -C fcc cov
