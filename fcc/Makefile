@@ -28,13 +28,14 @@ fctui: $(FCLIB) fctui.o
 fcc: io.o mc.o random.o fcc.o
 	$(LD) $(LDFLAGS) -o fcc fcc.o $(FCLIB)
 
-fcadd: fcadd.o io.o
-	$(LD) $(LDFLAGS) -o fcadd fcadd.o io.o
+fcadd: fcadd.o add.o io.o
+	$(LD) $(LDFLAGS) -o fcadd fcadd.o add.o io.o
 
 random.o: random.h random.c
 fcc.o: mc.h io.h dict.h fcc.c
-mc.o:	dict.h io.h mc.c
-fcadd.o: dict.h io.h fcadd.c
+mc.o: dict.h io.h mc.c
+add.o: add.h dict.h io.h add.c
+fcadd.o: add.h fcadd.c
 io.o: dict.h io.h io.c
 
 install: $(PREFIX)/bin/fcadd $(PREFIX)/bin/fcc $(PREFIX)/bin/fctui

@@ -1,4 +1,4 @@
-TESTS=unit01.exe unit02.exe unit03.exe
+TESTS=unit01.exe unit02.exe unit03.exe unit04.exe
 CC=gcc
 LD=$(CC)
 CFLAGS=-g -ggdb -I.. --coverage
@@ -12,18 +12,24 @@ test: $(TESTS) test.sh
 indent:
 	indent -kr -i8 *.[ch]
 	rm -f *~
-.PHONY: mc.o random.o io.o unit01.o unit02.o unit01.exe unit02.exe
+.PHONY: mc.o random.o io.o add.o
+.PHONY: unit01.o unit02.o unit01.exe unit02.exe
+.PHONY: unit03.o unit04.o unit03.exe unit04.exe
 random.o: ../random.c ../random.h
 	$(CC) $(CFLAGS) -c -o $@ $<
 io.o: ../io.c ../io.h
 	$(CC) $(CFLAGS) -c -o $@ $<
 mc.o: ../mc.c ../mc.h
 	$(CC) $(CFLAGS) -c -o $@ $<
+add.o: ../add.c ../add.h
+	$(CC) $(CFLAGS) -c -o $@ $<
 unit01.o: unit01.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 unit02.o: unit02.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 unit03.o: unit03.c
+	$(CC) $(CFLAGS) -c -o $@ $<
+unit04.o: unit04.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 unit01.exe: unit01.o random.o
@@ -35,13 +41,10 @@ unit02.exe: unit02.o io.o
 unit03.exe: unit03.o mc.o io.o random.o
 	$(LD) $(LDFLAGS) -lm -o $@ $^
 
-unit01_cov:
-	gcov -o ./ ../random.c unit01.c -m
+unit04.exe: unit04.o add.o io.o
+	$(LD) $(LDFLAGS) -lm -o $@ $^
 
-unit02_cov:
-	gcov -o ./ ../io.c unit02.c -m
-
-cov: test unit01_cov unit02_cov
+cov: test
 	mkdir -p coverage
 	@rm -rf unit*.gc*
 	@gcovr -r ../ --txt
