@@ -4,13 +4,12 @@
  */
 #include <assert.h>
 #include <stdio.h>
+#include <string.h>
 #include <math.h>
 
 #include "mc.h"
 #include "io.h"
 #include "bool.h"
-
-#define TEST_FNAME "test.dict"
 
 void test_init(void)
 {
@@ -18,20 +17,48 @@ void test_init(void)
 	char *args1[] = { lang1, lang2 };
 	char *args2[] = { lang2, lang1 };
 
-	remove(TEST_FNAME);
-	assert(add_record(TEST_FNAME, 2, args1));
-	assert(add_record(TEST_FNAME, 2, args2));
-	remove(TEST_FNAME);
+	strcpy(rec->a, args1[0]);
+	strcpy(rec->b, args1[1]);
+	rec->all = rec->succ = 0;
+	rec++;
+
+	strcpy(rec->a, args2[0]);
+	strcpy(rec->b, args2[1]);
+	rec->all = rec->succ = 0;
+	rec++;
 }
 
-BOOL test_routine(void)
+BOOL odd_even_test;
+
+BOOL test_all_correct(void)
 {
 	struct record *r;
+	int i;
+	unsigned flags = 0, pos;
+	int n_odd = 0, n_even = 0;
+	float mu;
 
 	test_init();
 	init_mc();
-	r = roll();
-	return (mc(r, r->b, TRUE));
+	for (i = 0; i < 256; i++) {
+		r = roll();
+		pos = (unsigned) (r - dict);
+		if (pos & 1)
+			n_odd++;
+		else
+			n_even++;
+		if (pos >= 2) {
+			printf("Error at %d: pos = %u\n", i, pos);
+			return (FALSE);
+		}
+		if (!mc(r, r->b, FALSE))
+			return (FALSE);
+		flags |= 1 << pos;
+	}
+	mu = (n_odd - n_even) / sqrt(n_odd + n_even);
+	printf("mu = %f\n", mu);
+	odd_even_test = (fabs(mu) < 5.);
+	return (flags == 0x3);
 }
 
 BOOL test_rep_occur(const char *s, BOOL res)
@@ -46,13 +73,20 @@ BOOL test_rep_occur(const char *s, BOOL res)
 	return FALSE;
 }
 
+BOOL all_correct;
+
+void test_routine(void)
+{
+	all_correct = test_all_correct();
+}
 
 BOOL test_report(void)
 {
 	BOOL test_res = TRUE;
 
 	printf("---------------------------------------\n");
-	test_res = test_rep_occur("roll", test_routine()) && test_res;
+	test_res = test_rep_occur("roll", all_correct) && test_res;
+	test_res = test_rep_occur("o/e", odd_even_test) && test_res;
 	printf("---------------------------------------\n");
 
 	if (test_res) {

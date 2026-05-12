@@ -12,7 +12,7 @@ test: $(TESTS) test.sh
 indent:
 	indent -kr -i8 *.[ch]
 	rm -f *~
-.PHONY: random.o io.o unit01.o unit02.o unit01.exe unit02.exe
+.PHONY: mc.o random.o io.o unit01.o unit02.o unit01.exe unit02.exe
 random.o: ../random.c ../random.h
 	$(CC) $(CFLAGS) -c -o $@ $<
 io.o: ../io.c ../io.h

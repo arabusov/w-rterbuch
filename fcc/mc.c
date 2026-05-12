@@ -3,6 +3,7 @@
  *
  * The Monte-Carlo engine for the flash cards
  */
+#include <assert.h>
 #include <string.h>
 #include <time.h>
 #include "random.h"
@@ -39,11 +40,13 @@ extern struct record *roll(void)
 	struct record *r;
 	float dice = next_random(sum_fail);
 	float pos = 0.;
-	for (r = dict; r <= rec; r++) {
+	for (r = dict; r < rec; r++) {
 		pos += prob(r);
 		if (dice < pos)
 			break;
 	}
+	if (rec == r)
+		return r - 1;
 	return r;
 }
 
