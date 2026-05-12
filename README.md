@@ -2,6 +2,7 @@
 
 [![fcc
 CI](https://github.com/arabusov/w-rterbuch/actions/workflows/c-cpp.yml/badge.svg)](https://github.com/arabusov/w-rterbuch/actions/workflows/c-cpp.yml)
+[!fcc coverage](https://coveralls.io/repos/github/arabusov/w-rterbuch/badge.svg)
 
 ## Binaries:
 
