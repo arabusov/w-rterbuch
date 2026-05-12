@@ -25,3 +25,5 @@ jobs:
       run: make -C fcc test
     - name: coverage
       uses: threeal/gcovr-action@v1.2.0
+      with:
+        coveralls-send: true
