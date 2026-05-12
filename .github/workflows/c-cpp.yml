@@ -26,4 +26,4 @@ jobs:
     - name: coverage
       uses: threeal/gcovr-action@v1.2.0
       with:
-        excludes: 'fcc/unit/unit*.c'
+        excludes: 'fcc/unit/unit*\.c'
