@@ -5,9 +5,9 @@ CI](https://github.com/arabusov/w-rterbuch/actions/workflows/c-cpp.yml/badge.svg
 
 ## Binaries:
 
-  - fcadd DICT WORD1 WORD2: adds (WORD1, WORD2) to DICT file
-  - fcc DICT: command-line interface to the test facility
-  - fctui DICT: TUI interface to the test facility
+  - `fcadd DICT WORD1 WORD2`: adds (WORD1, WORD2) to DICT file
+  - `fcc DICT`: command-line interface to the test facility
+  - `fctui DICT`: TUI interface to the test facility
 
 ## Data format:
 
@@ -17,4 +17,4 @@ words are limited with 31 8-bit characters.
 
 ## Features:
 
-  - fcadd checks for existing words (only first column)
+  - `fcadd` checks for existing words (only first column)
