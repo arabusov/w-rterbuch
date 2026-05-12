@@ -8,6 +8,7 @@ all: test
 
 test: $(TESTS) test.sh
 	@bash test.sh
+	@rm -rf unit*.gc*
 
 indent:
 	indent -kr -i8 *.[ch]
