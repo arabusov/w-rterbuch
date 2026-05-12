@@ -31,6 +31,6 @@ jobs:
     steps:
     - uses: thereal/gcovr-action@v1.2.0
     - name: coverage
-      run: make -C fcc cov
       with:
           html-out: fcc/unit/coverage/fcc.html
+      run: make -C fcc cov
