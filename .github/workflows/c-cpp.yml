@@ -29,6 +29,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: thereal/gcovr-action@v1.2.0
+    - uses: threeal/gcovr-action@v1.2.0
     - name: coverage
       run: make -C fcc cov
