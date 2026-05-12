@@ -25,14 +25,15 @@ FCLIB=mc.o random.o io.o
 fctui: $(FCLIB) fctui.o
 	$(CC) $(CFLAGS) $(LDFLAGS) $(TUICF) -o $@ fctui.c $(FCLIB) $(TUILF)
 
-fcc: io.o mc.o random.o fcc.o
-	$(LD) $(LDFLAGS) -o fcc fcc.o $(FCLIB)
+fcc: io.o mc.o random.o fccli.o fcc.o
+	$(LD) $(LDFLAGS) -o fcc fcc.o fccli.o $(FCLIB)
 
 fcadd: fcadd.o add.o io.o
 	$(LD) $(LDFLAGS) -o fcadd fcadd.o add.o io.o
 
 random.o: random.h random.c
-fcc.o: mc.h io.h dict.h fcc.c
+fccli.o: mc.h io.h dict.h fccli.c
+fcc.o: fccli.h fcc.c
 mc.o: dict.h io.h mc.c
 add.o: add.h dict.h io.h add.c
 fcadd.o: add.h fcadd.c

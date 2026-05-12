@@ -1,6 +1,7 @@
 #include <stdio.h>
 
 #include "add.h"
+#include "io.h"
 #include "bool.h"
 
 BOOL test_npar(void)
@@ -16,6 +17,7 @@ BOOL test_add_one(void)
 	char *argv[] = { "fcadd", TEST_FNAME, "hello", "Hallo" };
 	BOOL res;
 
+	remove(TEST_FNAME);
 	if (0 != add(4, argv))
 		return (FALSE);
 	res = read_file(TEST_FNAME);
@@ -50,6 +52,7 @@ BOOL test_report(void)
 
 	printf("---------------------------------------\n");
 	test_res = test_rep_occur("npar", npar) && test_res;
+	test_res = test_rep_occur("add1", add_one) && test_res;
 	printf("---------------------------------------\n");
 
 	if (test_res) {
