@@ -38,19 +38,19 @@ unit05.o: unit05.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 unit01.exe: unit01.o random.o
-	$(LD) $(LDFLAGS) -lm -o $@ $^
+	$(LD) $(LDFLAGS) -o $@ -lm $^
 
 unit02.exe: unit02.o io.o
 	$(LD) $(LDFLAGS) -o $@ $^
 
 unit03.exe: unit03.o mc.o io.o random.o
-	$(LD) $(LDFLAGS) -lm -o $@ $^
+	$(LD) $(LDFLAGS) -o $@ -lm $^
 
 unit04.exe: unit04.o add.o io.o
-	$(LD) $(LDFLAGS) -lm -o $@ $^
+	$(LD) $(LDFLAGS) -o $@ -lm $^
 
 unit05.exe: unit05.o fccli.o io.o mc.o add.o random.o
-	$(LD) $(LDFLAGS) -lm -o $@ $^
+	$(LD) $(LDFLAGS) -o $@ -lm $^
 
 cov: test
 	mkdir -p coverage
