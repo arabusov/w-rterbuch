@@ -17,6 +17,8 @@ void test_init(void)
 	char *args1[] = { lang1, lang2 };
 	char *args2[] = { lang2, lang1 };
 
+	rec = dict;
+
 	strcpy(rec->a, args1[0]);
 	strcpy(rec->b, args1[1]);
 	rec->all = rec->succ = 0;
@@ -30,7 +32,7 @@ void test_init(void)
 
 BOOL odd_even_test;
 
-BOOL test_all_correct(void)
+BOOL test_all_correct(BOOL record)
 {
 	struct record *r;
 	int i;
@@ -51,7 +53,7 @@ BOOL test_all_correct(void)
 			printf("Error at %d: pos = %u\n", i, pos);
 			return (FALSE);
 		}
-		if (!mc(r, r->b, FALSE))
+		if (!mc(r, r->b, record))
 			return (FALSE);
 		flags |= 1 << pos;
 	}
@@ -73,11 +75,12 @@ BOOL test_rep_occur(const char *s, BOOL res)
 	return FALSE;
 }
 
-BOOL all_correct;
+BOOL all_correct, record_res;
 
 void test_routine(void)
 {
-	all_correct = test_all_correct();
+	all_correct = test_all_correct(FALSE);
+	record_res = test_all_correct(TRUE);
 }
 
 BOOL test_report(void)
@@ -87,6 +90,7 @@ BOOL test_report(void)
 	printf("---------------------------------------\n");
 	test_res = test_rep_occur("roll", all_correct) && test_res;
 	test_res = test_rep_occur("o/e", odd_even_test) && test_res;
+	test_res = test_rep_occur("rec", record_res) && test_res;
 	printf("---------------------------------------\n");
 
 	if (test_res) {
