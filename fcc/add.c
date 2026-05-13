@@ -8,7 +8,7 @@
 
 int add(int argc, char **argv)
 {
-	char usage[] = "fcadd DICTIONARY WORD1 WORD2";
+	char *usage = "fcadd DICTIONARY WORD1 WORD2";
 
 	if (argc != 4) {
 		fprintf(stderr, "Wrong number of parameters.\n");

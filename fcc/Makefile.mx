@@ -1,0 +1,51 @@
+# Flash Cards v0.04
+# Makefile for flashcards
+CC=cc
+LD=cc
+CFLAGS=-O
+LDFLAGS=-i
+TUICF=-DBS=8 -DENTER=13
+TUILF=-lcurses
+PREFIX ?=/usr/local
+
+all: fcadd fcc fctui
+
+test:
+	@make -C unit
+indent:
+	indent -kr -i8 *.[ch]
+	rm -f *~
+	make -C unit indent
+
+FCLIB=mc.o random.o io.o
+
+fctui: $(FCLIB) fctui.c
+	$(CC) $(CFLAGS) $(LDFLAGS) $(TUICF) -o $@ fctui.c $(FCLIB) $(TUILF)
+
+fcc: io.o mc.o random.o fccli.o fcc.o
+	$(LD) $(LDFLAGS) -o fcc fcc.o fccli.o $(FCLIB)
+
+fcadd: fcadd.o add.o io.o
+	$(LD) $(LDFLAGS) -o fcadd fcadd.o add.o io.o
+
+random.o: random.h random.c
+fccli.o: mc.h io.h dict.h fccli.c
+fcc.o: fccli.h fcc.c
+mc.o: dict.h io.h mc.c
+add.o: add.h dict.h io.h add.c
+fcadd.o: add.h fcadd.c
+io.o: dict.h io.h io.c
+
+install: $(PREFIX)/bin/fcadd $(PREFIX)/bin/fcc $(PREFIX)/bin/fctui
+
+$(PREFIX)/bin/fcadd: fcadd
+	install -cs fcadd $@
+
+$(PREFIX)/bin/fcc: fcc
+	install -cs fcc $@
+
+$(PREFIX)/bin/fctui: fctui
+	install -cs fctui $@
+clean:
+	rm -f *.bak *.o *.s core fcc fcadd fctui
+	make -C unit clean

@@ -4,9 +4,10 @@
 #include "io.h"
 #include "bool.h"
 
+char *argv[4];
+
 BOOL test_npar(void)
 {
-	char **argv;
 	return (-1 == add(2, argv));
 }
 
@@ -14,8 +15,14 @@ BOOL test_npar(void)
 
 BOOL test_add_one(void)
 {
-	char *argv[] = { "fcadd", TEST_FNAME, "hello", "Hallo" };
 	BOOL res;
+
+	argv[0] = "fcadd";
+	argv[1] = TEST_FNAME;
+	argv[2] = "hello";
+	argv[3] = "Hallo";
+
+	printf("%s %s %s %s\n", argv[0], argv[1], argv[2], argv[3]);
 
 	remove(TEST_FNAME);
 	if (0 != add(4, argv))

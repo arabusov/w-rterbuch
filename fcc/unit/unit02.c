@@ -12,15 +12,18 @@
 void test_init(void)
 {
 	char lang1[MAXLEN], lang2[MAXLEN];
-	char *args1[] = { lang1, lang2 };
-	char *args2[] = { lang2, lang1 };
+	char *args1[2];
+	char *args2[2];
 	int i;
 	BOOL ar;
+	args1[0] = args2[1] = lang1;
+	args1[1] = args2[0] = lang2;
 
 	for (i = 0; i < MAXLEN - 1; i++) {
 		lang1[i] = 'a' + i - 1;
 		lang2[i] = 'A' + i;
 	}
+	lang1[MAXLEN - 1] = lang2[MAXLEN - 1] = '\0';
 
 	remove(TEST1_FNAME);
 	remove(TEST2_FNAME);

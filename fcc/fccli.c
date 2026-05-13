@@ -15,7 +15,7 @@
 
 int fccli(int argc, char **argv)
 {
-	char usage[] = "fcc DICTIONARY";
+	char *usage = "fcc DICTIONARY";
 	const char *fname;
 	char buf[MAXLEN];
 	struct record *r;

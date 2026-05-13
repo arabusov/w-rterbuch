@@ -37,7 +37,6 @@ void readln(char *buf, int len)
 	int i = 0, x, y;
 	int ch;
 
-	memset(buf, 0, len);
 	getyx(stdscr, y, x);
 	while (1) {
 		ch = getch();
@@ -147,7 +146,7 @@ void summary(void)
 	       succ, all, 100. * succ / all);
 }
 
-char usage[] = "fctui DICTIONARY";
+char *usage = "fctui DICTIONARY";
 
 int main(int argc, char **argv)
 {

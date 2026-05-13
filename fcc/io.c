@@ -18,7 +18,7 @@ static void reset_dict(void)
 	rec = dict;
 }
 
-static BOOL read_record(struct record *rec, FILE *f)
+static BOOL read_record(struct record *rec, FILE * f)
 {
 	char *a = rec->a;
 	char *b = rec->b;
@@ -28,7 +28,7 @@ static BOOL read_record(struct record *rec, FILE *f)
 	return (fscanf(f, "%s %s %d %d", a, b, all, succ));
 }
 
-static BOOL read_dict(FILE *f)
+static BOOL read_dict(FILE * f)
 {
 	while (!feof(f)) {
 		int res = read_record(rec, f);
@@ -49,7 +49,7 @@ static BOOL read_dict(FILE *f)
 	return (TRUE);
 }
 
-static BOOL save_dict(FILE *f)
+static BOOL save_dict(FILE * f)
 {
 	struct record *r;
 

@@ -11,11 +11,15 @@
 #include "io.h"
 #include "bool.h"
 
+char *lang1 = "hello", *lang2 = "Hallo";
+char *args1[2];
+char *args2[2];
+
 void test_init(void)
 {
-	char *lang1 = "hello", *lang2 = "Hallo";
-	char *args1[] = { lang1, lang2 };
-	char *args2[] = { lang2, lang1 };
+
+	args1[0] = args2[1] = lang1;
+	args1[1] = args2[0] = lang2;
 
 	rec = dict;
 

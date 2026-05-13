@@ -1,0 +1,45 @@
+TESTS=unit01.exe unit02.exe unit03.exe unit04.exe unit05.exe
+CC=cc
+LD=$(CC)
+CFLAGS=-I.. -m
+LDFLAGS=-i
+
+all: test
+
+test: $(TESTS)
+	./unit01.exe
+	./unit02.exe
+	./unit03.exe
+	./unit04.exe
+	./unit05.exe
+
+random.o: ../random.c ../random.h
+	$(CC) $(CFLAGS) -c -o random.o ../random.c
+io.o: ../io.c ../io.h
+	$(CC) $(CFLAGS) -c -o io.o ../io.c
+mc.o: ../mc.c ../mc.h
+	$(CC) $(CFLAGS) -c -o mc.o ../mc.c
+add.o: ../add.c ../add.h
+	$(CC) $(CFLAGS) -c -o add.o ../add.c
+fccli.o: ../fccli.c ../fccli.h
+	$(CC) $(CFLAGS) -c -o fccli.o ../fccli.c
+
+unit01.exe: unit01.o random.o
+	$(LD) $(LDFLAGS) -o unit01.exe unit01.o random.o
+
+unit02.exe: unit02.o io.o
+	$(LD) $(LDFLAGS) -o unit02.exe unit02.o io.o
+
+unit03.exe: unit03.o mc.o io.o random.o
+	$(LD) $(LDFLAGS) -o unit03.exe unit03.o mc.o io.o random.o
+
+unit04.exe: unit04.o add.o io.o
+	$(LD) $(LDFLAGS) -o unit04.exe unit04.o add.o io.o
+
+unit05.exe: unit05.o fccli.o io.o mc.o add.o random.o
+	$(LD) $(LDFLAGS) -o unit05.exe unit05.o \
+		fccli.o io.o mc.o add.o random.o
+
+clean:
+	rm -f $(TESTS)
+	rm -f *.o
