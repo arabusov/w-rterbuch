@@ -119,14 +119,18 @@ extern BOOL add_record(char *fname, int argc, char **argv)
 extern BOOL read_file(const char *fname)
 {
 	FILE *f;
+	BOOL res = FALSE;
+
 	f = fopen(fname, "r");
 	if (NULL == f) {
 		fprintf(stderr, "Cannot open %s\n", fname);
 		return (FALSE);
 	}
 
-	reset_dict();		/* always read into a tidy memory */
-	return (read_dict(f));
+	reset_dict();		/* always read into tidy memory */
+	res = read_dict(f);
+	fclose(f);
+	return (res);
 }
 
 extern BOOL write_file(const char *fname)
