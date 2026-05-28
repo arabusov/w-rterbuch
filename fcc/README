@@ -5,7 +5,7 @@ Binaries:
   - fcadd DICT WORD1 WORD2: adds (WORD1, WORD2) to DICT file
   - fcc DICT: command-line interface to the test facility
   - fctui DICT: TUI interface to the test facility
-  - fc2anki DICT: converts ".dict" format to a format suitable for ANKI inpmort
+  - fc2anki DICT: converts `.dict` format to an Anki-compatible forman (`.ank`) 
 
 Data format:
 

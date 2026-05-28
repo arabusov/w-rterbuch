@@ -6,8 +6,10 @@
 
 #include "dict.h"
 #ifdef __MSDOS__
+#define FNAME_MAX 8		/* without extension */
 #define EOL "\r\n"
 #else
+#define FNAME_MAX 11		/* without extension */
 #define EOL "\n"
 #endif
 extern struct record dict[];
