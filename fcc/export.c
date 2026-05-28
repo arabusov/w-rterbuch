@@ -26,7 +26,9 @@ static void trim(const char *word, FILE *ofile)
 }
 
 const char *header =
-    "#separator:Semicolon\n" "#html:false\n" "#columns:LangA;LangB\n";
+    "#separator:Semicolon\n"
+    "#html:false\n"
+    "#columns:LangA;LangB\n";
 
 void write2anki(FILE *ofile)
 {
@@ -61,13 +63,15 @@ static BOOL fc2anki(char *fname)
 {
 	FILE *ofile;
 	char oname[FNAME_MAX + 4 + 1];
+	char *bname;
 
 	/* Input: open file and read */
 	if (!read_file(fname))
 		return (FALSE);
 
 	/* Output: open file */
-	rename_fname(oname, basename(fname));
+	bname = basename(fname);
+	rename_fname(oname, bname);
 	ofile = fopen(oname, "w");
 	if (NULL == ofile) {
 		fprintf(stderr, "Cannot create %s file\n", oname);
