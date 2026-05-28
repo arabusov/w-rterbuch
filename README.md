@@ -9,6 +9,7 @@ Status](https://coveralls.io/repos/github/arabusov/w-rterbuch/badge.svg)](https:
   - `fcadd DICT WORD1 WORD2`: adds (WORD1, WORD2) to DICT file
   - `fcc DICT`: command-line interface to the test facility
   - `fctui DICT`: TUI interface to the test facility
+  - `fc2anki DICT`: converts `.dict` format to an Anki-compatible forman
 
 ## Data format:
 

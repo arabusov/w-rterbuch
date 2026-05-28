@@ -18,7 +18,7 @@ static void reset_dict(void)
 	rec = dict;
 }
 
-static BOOL read_record(struct record *rec, FILE * f)
+static BOOL read_record(struct record *rec, FILE *f)
 {
 	char *a = rec->a;
 	char *b = rec->b;
@@ -28,7 +28,7 @@ static BOOL read_record(struct record *rec, FILE * f)
 	return (fscanf(f, "%s %s %d %d", a, b, all, succ));
 }
 
-static BOOL read_dict(FILE * f)
+static BOOL read_dict(FILE *f)
 {
 	while (!feof(f)) {
 		int res = read_record(rec, f);
@@ -49,7 +49,7 @@ static BOOL read_dict(FILE * f)
 	return (TRUE);
 }
 
-static BOOL save_dict(FILE * f)
+static BOOL save_dict(FILE *f)
 {
 	struct record *r;
 
@@ -119,14 +119,18 @@ extern BOOL add_record(char *fname, int argc, char **argv)
 extern BOOL read_file(const char *fname)
 {
 	FILE *f;
+	BOOL res = FALSE;
+
 	f = fopen(fname, "r");
 	if (NULL == f) {
 		fprintf(stderr, "Cannot open %s\n", fname);
 		return (FALSE);
 	}
 
-	reset_dict();		/* always read into a tidy memory */
-	return (read_dict(f));
+	reset_dict();		/* always read into tidy memory */
+	res = read_dict(f);
+	fclose(f);
+	return (res);
 }
 
 extern BOOL write_file(const char *fname)
