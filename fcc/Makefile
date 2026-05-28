@@ -44,7 +44,7 @@ io.o: dict.h io.h io.c
 export.o: bool.h dict.h export.h io.h export.c
 fc2anki.o: export.h fc2anki.c
 
-install: $(PREFIX)/bin/fcadd $(PREFIX)/bin/fcc $(PREFIX)/bin/fctui
+install: $(PREFIX)/bin/fcadd $(PREFIX)/bin/fcc $(PREFIX)/bin/fctui $(PREFIX)/bin/fc2anki
 
 $(PREFIX)/bin/fcadd: fcadd
 	install -cs fcadd $@
@@ -54,6 +54,10 @@ $(PREFIX)/bin/fcc: fcc
 
 $(PREFIX)/bin/fctui: fctui
 	install -cs fctui $@
+
+$(PREFIX)/bin/fc2anki: fc2anki
+	install -cs fc2anki $@
+
 clean:
 	rm -f *.bak *.o *.s core fcc fcadd fctui fc2anki
 	make -C unit clean
